@@ -1,0 +1,57 @@
+var s1 = new SystemOne();
+
+function $_ID(id){
+    return document.getElementById(id);
+}
+
+function $_CLASS(cl){
+    return document.getElementsByClassName(cl);
+}
+
+function $_TAG(tag){
+    return document.getElementsByTagName(tag);
+}
+
+function activateMenu(){
+    var classes = $_CLASS('menuChoice');
+    for(var i = 0; i < classes.length; i++){
+        classes[i].className = 'menuChoice';
+        console.log(classes[i].id + 'Section');
+        var tmp = $_ID(classes[i].id + 'Section');
+        if(tmp!=null){
+//             tmp.style.opacity = '0.0';
+//             tmp.style.display = 'none';
+//             tmp.style.overflow = 'hidden';
+//             tmp.style.height= '0%';
+            tmp.style.transform = 'translateX(-120%)';
+        }
+    }
+    
+    //$_ID('rightWindow').innerHTML = this.id;
+    var tmp2 = $_ID(this.id + 'Section');
+    if(tmp2!=null){
+        tmp2.style.transform = 'translateX(0%)';
+//         tmp2.style.opacity = '1.0';
+//         tmp2.style.overflow = 'auto';
+//         tmp2.style.height = '100%';
+    }
+    this.className += ' menuActive';
+}
+
+window.onload = function(){
+    var classes = $_CLASS('menuChoice');
+    for(var i = 0; i < classes.length; i++){
+        classes[i].onclick = activateMenu;
+    }
+    
+    $_ID('logout').onclick = function(){
+        $_ID('login').className = 'section';
+//         $_ID('main').className += ' sectionExitToRight';
+    }
+    
+    $_ID('mainform').onsubmit = function(){
+        s1.login($_ID('uname').text, $_ID('upass').text);
+//         $_ID('login').className = 'section loginInactive';
+        return false;
+    }
+}
