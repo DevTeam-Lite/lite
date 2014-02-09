@@ -32,11 +32,6 @@ Ajax.prototype.requestGet = function(url, func){
             func(this.responseText);
         }
     }
-    
-
-    this.xmlr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    this.xmlr.setRequestHeader("Content-length", null);
-    this.xmlr.setRequestHeader("Connection", "close");
 
     this.xmlr.open("GET", url, true);
     this.xmlr.send();
@@ -47,7 +42,7 @@ Ajax.prototype.requestPost = function(url, data, func){
         if(this.readyState == 4){
             if(this.status == 0) alert("A server timeout has occured.");
             else if(this.status != 200) alert("The server responded with a status code of " + this.status + ".");
-            else if(this.responseText.length <= 0) this.onerror;
+//             else if(this.responseText.length <= 0) this.onerror;
             else func(this.responseText);
         }
     }
