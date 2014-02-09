@@ -1,7 +1,10 @@
-function SystemOne(){
+function SystemOne(mainui){
     this.user = null;
     this.loggedIn = false;
     this.ajax = new Ajax();
+    this.ui = mainui;
+    mainui.setEngine(this);
+    this.sessionID = "";
 }
 
 SystemOne.prototype.getName = function(){ return this.user.name; }
@@ -9,13 +12,18 @@ SystemOne.prototype.getLastLogin = function(){ return this.user.lastLogin; }
 SystemOne.prototype.getUnits = function(){ return this.user.units; }
 SystemOne.prototype.updateViewInfo = function(){
     if(this.loggedIn == true){
-        $_ID('name').innerHTML = this.user.name;
-        $_ID('lastLogin').innerHTML = this.user.lastLogin;
-        $_ID('units').innerHTML = this.user.units;
-        $_ID('icon').src = this.user.icon;
-
+        this.ui.updateViewFromUserData(this.user);
     }
 }
+
+SystemOne.prototype.logout = function(){
+    var $ss = this;
+    this.ajax.requestPost("process.php?p=logout", 'sessid=' + this.sessionID, function(r){
+        $ss.loggedIn = false;
+        $ss.ui.logout();
+    });
+}
+
 SystemOne.prototype.login = function(username, password){
     var $ss = this;
     this.ajax.requestPost("process.php?p=login", 'user=' + username + '&password=' + password, function(r){

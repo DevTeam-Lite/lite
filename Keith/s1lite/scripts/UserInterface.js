@@ -1,19 +1,12 @@
-var s1 = new SystemOne();
-var ui;
 
 function UserInterface(rt){
     this.root = rt;
-
-    $_ID('logout').onclick = function(){
-        $_ID('login').className = 'section';
-        //         $_ID('main').className += ' sectionExitToRight';
-    }
 
     $_ID('mainform').onsubmit = function(){
         s1.login($_ID('uname').value, $_ID('upass').value);
         //         $_ID('login').className = 'section loginInactive';
         return false;
-    }
+    };
 
     rt.onresize=function(){
         var classes = $_CLASS('rightSection');
@@ -23,7 +16,20 @@ function UserInterface(rt){
     };
 
     this.initializeMenu();
+    this.engine = null;
 }
+
+UserInterface.prototype.logout = function(){
+    $_ID('login').className = 'section';
+};
+
+UserInterface.prototype.setEngine = function(s){
+    this.engine = s;
+    var $ss = s;
+    $_ID('logout').onclick = function(){
+        $ss.logout();
+    };
+};
 
 UserInterface.prototype.initializeMenu = function(){
     var classes = $_CLASS('menuChoice');
@@ -63,21 +69,13 @@ UserInterface.prototype.activateMenu = function(){
                 targetSection.setAttribute('active','true');
             }
         }
-//             tmp.style.opacity = '0.0';
-//             tmp.style.display = 'none';
-//             tmp.style.overflow = 'hidden';
-//             tmp.style.height= '0%';
-//         }
     }
-    
-    //$_ID('rightWindow').innerHTML = this.id;
-//     targetSection.style.MozTransform = targetSection.style.webkitTransform = targetSection.style.transform = 'translateX(0%)';
-//         targetSection.style.opacity = '1.0';
-//         targetSection.style.overflow = 'auto';
-//         targetSection.style.height = '100%';
     this.className += ' menuActive';
 };
 
-window.onload = function(){
-    ui = new UserInterface(this);
+UserInterface.prototype.updateViewFromUserData = function(u){
+    $_ID('name').innerHTML = u.name;
+    $_ID('lastLogin').innerHTML = u.lastLogin;
+    $_ID('units').innerHTML = u.units;
+    $_ID('icon').src = u.icon;
 };
