@@ -1,4 +1,5 @@
 <?php
+    error_reporting(~E_ALL);
     if($_GET['p'] == 'login'){
     $login="false";
         switch($_POST['user']){
