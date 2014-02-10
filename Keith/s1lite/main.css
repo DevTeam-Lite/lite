@@ -7,6 +7,11 @@ body,head{
 
 }
 
+@font-face{
+    font-family:'Open Sans Light';
+    src: url(OpenSans-Light.ttf);
+}
+
 .section{
     height:100%;
     width:100%;
