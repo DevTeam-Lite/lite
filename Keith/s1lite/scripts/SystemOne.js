@@ -26,7 +26,7 @@ SystemOne.prototype.login = function(username, password){
             return alert('The server has responded with invalid data.');
         }
 
-        if(res.login){
+        if(res.user){
             $.user = res.user;
             $.ui.login($.user);
         } else {
@@ -34,3 +34,19 @@ SystemOne.prototype.login = function(username, password){
         }
     });
 }
+
+SystemOne.prototype.updateSection = function(section){
+    var $ = this;
+    switch(section){
+        case "news":
+            this.ajax.requestGet("process.php?p=news", function(r){
+                try{
+                    var res = JSON.parse(r);
+                }catch(e){
+                    return alert('The server has responded with invalid data.');
+                }
+                $.ui.updateNews(res);
+            });
+            break;
+    }
+};

@@ -69,3 +69,16 @@ UserInterface.prototype.activateMenu = function(){
     }
     this.className += ' menuActive';
 };
+
+UserInterface.prototype.updateNews = function(data){
+    var sect = $_ID("homeSection");
+    sect.innerHTML = "";
+    for(i=0;i<data.news.length;i++){
+        sect.innerHTML += '<article class="newsArticle">' + "\n"
+        + '<header class="newsHeader">' + data.news[i].title + '</header>' + "\n"
+        + data.news[i].body + "\n"
+        + '<footer class="newsFooter">- ' + data.news[i].author + ' (' + data.news[i].date + ')</footer>' + "\n"
+        + '</article>' + "\n";
+//         data.news[i]
+    }
+};
