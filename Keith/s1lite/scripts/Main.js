@@ -1,4 +1,3 @@
 window.onload = function(){
-    ui = new UserInterface(this);
-    s1 = new SystemOne(ui);
+    s1 = new SystemOne(new UserInterface());
 };

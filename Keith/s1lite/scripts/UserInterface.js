@@ -1,12 +1,10 @@
 
-function UserInterface(rt){
-    this.root = rt;
+function UserInterface(){
 
-    $_ID('mainform').onsubmit = function(){
-        s1.login($_ID('uname').value, $_ID('upass').value);
-        //         $_ID('login').className = 'section loginInactive';
-        return false;
-    };
+    var classes = $_CLASS('menuChoice');
+    for(var i = 0; i < classes.length; i++){
+        classes[i].onclick = this.activateMenu;
+    }
 
     rt.onresize=function(){
         var classes = $_CLASS('rightSection');
@@ -14,28 +12,36 @@ function UserInterface(rt){
             classes[i].width = (255 - rt.innerWidth) + 'px';
         }
     };
-
-    this.initializeMenu();
-    this.engine = null;
 }
 
 UserInterface.prototype.logout = function(){
     $_ID('login').className = 'section';
+    $_ID('name').innerHTML = "";
+    $_ID('lastLogin').innerHTML = "";
+    $_ID('units').innerHTML = "";
+    $_ID('icon').src = "";
 };
 
-UserInterface.prototype.setEngine = function(s){
-    this.engine = s;
-    var $ss = s;
-    $_ID('logout').onclick = function(){
-        $ss.logout();
+UserInterface.prototype.login = function(user){
+    $_ID('login').className = 'section loginInactive';
+
+    $_ID('name').innerHTML = user.name
+    $_ID('lastLogin').innerHTML = user.lastLogin;
+    $_ID('units').innerHTML = user.units;
+    $_ID('icon').src = user.icon;
+
+}
+
+UserInterface.prototype.bind = function($){
+
+    $_ID('mainform').onsubmit = function(){
+        $.login($_ID('uname').value, $_ID('upass').value);
+        return false;
     };
-};
 
-UserInterface.prototype.initializeMenu = function(){
-    var classes = $_CLASS('menuChoice');
-    for(var i = 0; i < classes.length; i++){
-        classes[i].onclick = this.activateMenu;
-    }
+    $_ID('logout').onclick = function(){
+        $.logout();
+    };
 };
 
 UserInterface.prototype.activateMenu = function(){
@@ -51,7 +57,6 @@ UserInterface.prototype.activateMenu = function(){
 
     for(var i = 0; i < classes.length; i++){
         classes[i].className = 'menuChoice';
-//         console.log(classes[i].id + 'Section');
         var tmp = $_ID(classes[i].id + 'Section');
         if(tmp!=null){
             console.log(tmp.id + ":" + tmp.getAttribute('active'))
@@ -71,11 +76,4 @@ UserInterface.prototype.activateMenu = function(){
         }
     }
     this.className += ' menuActive';
-};
-
-UserInterface.prototype.updateViewFromUserData = function(u){
-    $_ID('name').innerHTML = u.name;
-    $_ID('lastLogin').innerHTML = u.lastLogin;
-    $_ID('units').innerHTML = u.units;
-    $_ID('icon').src = u.icon;
 };
