@@ -1,15 +1,15 @@
 
-function UserInterface(){
+function UserInterface(root){
 
     var classes = $_CLASS('menuChoice');
     for(var i = 0; i < classes.length; i++){
         classes[i].onclick = this.activateMenu;
     }
 
-    rt.onresize=function(){
+    root.onresize=function(){
         var classes = $_CLASS('rightSection');
         for(var i = 0; i<classes.length;i++){
-            classes[i].width = (255 - rt.innerWidth) + 'px';
+            classes[i].width = (255 - root.innerWidth) + 'px';
         }
     };
 }
@@ -51,19 +51,11 @@ UserInterface.prototype.activateMenu = function(){
     if(targetSection == null) return;
 
     for(var i = 0; i < classes.length; i++){
-        if(tmp!=null)
-            tmp.style.animation = null;
-    }
-
-    for(var i = 0; i < classes.length; i++){
         classes[i].className = 'menuChoice';
         var tmp = $_ID(classes[i].id + 'Section');
         if(tmp!=null){
-            console.log(tmp.id + ":" + tmp.getAttribute('active'))
             if(tmp.getAttribute('active') == "true"){
-                console.log('Active attribute found in ' + tmp.id)
                 if(tmp.getAttribute('index') < targetSection.getAttribute('index')){
-                    console.log('Setting tmp.' + tmp.id + "'s class to exitToLeft");
                     tmp.className = 'rightSection exitToLeft';
                     targetSection.className = 'rightSection enterFromRight';
                 }else if(tmp.getAttribute('index') > targetSection.getAttribute('index')){
