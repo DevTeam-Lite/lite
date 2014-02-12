@@ -16,6 +16,8 @@ function Ajax(){
     
     this.xmlr = createXMLHttpRequest();
 
+    this.xmlr.timeout = 4000;
+    
     this.xmlr.ontimeout = function(){
         alert(alert("The previous request timed out."));
     }
@@ -46,11 +48,10 @@ Ajax.prototype.requestPost = function(url, data, func){
             else func(this.responseText);
         }
     }
+    
     this.xmlr.open("POST", url, true);
-
-     this.xmlr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-     this.xmlr.setRequestHeader("Content-length", data.length);
-     this.xmlr.setRequestHeader("Connection", "close");
-
+    this.xmlr.setRequestHeader("Content-length", data.length);
+    this.xmlr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    this.xmlr.setRequestHeader("Connection", "close");
     this.xmlr.send(data);
 }
