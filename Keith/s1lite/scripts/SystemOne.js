@@ -29,6 +29,7 @@ SystemOne.prototype.login = function(username, password){
         if(res.user){
             $.user = res.user;
             $.ui.login($.user);
+            $.updateSection("news");
         } else {
             alert(res.message);
         }
@@ -39,6 +40,7 @@ SystemOne.prototype.updateSection = function(section){
     var $ = this;
     switch(section){
         case "news":
+            $.ui.setLoading("homeSection");
             this.ajax.requestGet("process.php?p=news", function(r){
                 try{
                     var res = JSON.parse(r);

@@ -70,6 +70,10 @@ UserInterface.prototype.activateMenu = function(){
     this.className += ' menuActive';
 };
 
+UserInterface.prototype.setLoading = function(id){
+    $_ID(id).innerHTML = '<div class="loading"></div>';
+}
+
 UserInterface.prototype.updateNews = function(data){
     var sect = $_ID("homeSection");
     sect.innerHTML = "";
